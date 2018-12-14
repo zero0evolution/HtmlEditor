@@ -46,12 +46,25 @@ function createImg(imgFile){
 	// close button
 	imgBlock.appendChild(createCloseButton(imgBlock));
 
-
+	// 
 	setElemMoveFunc(imgBlock)
 
+	// 
 	imgBlock.addEventListener(
 		"click", function(event){
 			event.stopPropagation();event.preventDefault();
+		}
+	)
+
+	// 調整長寬
+	imgElem.addEventListener(
+		"load",function(){
+			$(imgBlock).css(
+				{
+					width:String(imgElem.width)+"px",
+					height:String(imgElem.height)+"px",
+				}
+			)
 		}
 	)
 

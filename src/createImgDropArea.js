@@ -19,7 +19,7 @@ $(document.head).append(
 function createImgDropArea(){
 	
 	let imgDropArea = $(".imgDropArea")[0]
-	if(imgDropArea){return(imgDropArea)}
+	if(imgDropArea instanceof Element){return(imgDropArea)}
 	
 	imgDropArea = $(`<div class="imgDropArea"><p>圖片拖曳至此</p></div>`)[0]
 
@@ -48,8 +48,9 @@ function createImgDropArea(){
 			const imgDropArea = event.currentTarget;
 
 			for (const file of event.dataTransfer.files) {
+				console.log(file)
 
-				if (!file.type.match(/image.*/)) {continue;}
+				if (!file.type.match(/^image/)) {continue;}
 				
 				const imgBlock = createImg(file);
 
@@ -71,7 +72,6 @@ function createImgDropArea(){
 	imgDropArea.appendChild(createCloseButton(imgDropArea))
 
 	setElemMoveFunc(imgDropArea)
-
 
 	return(imgDropArea)
 }
