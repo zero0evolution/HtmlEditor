@@ -1,78 +1,103 @@
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
+<html style="font-size: 20px; color: rgb(255, 255, 255); background-color: rgb(0, 0, 0); line-height: 32px;"><head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	</head>
-	<body align="center">
 
-		<!-- 1. Copy image data into clipboard or press Print Screen <br> -->
-		<!-- 2. Press Ctrl+V (page/iframe must be focused): -->
-		<!-- <br /><br /> -->
-		<canvas style="border:1px solid grey;" id="my_canvas" width="300" height="300"></canvas>
+  <script type="text/javascript" src="/js/lib/dummy.js"></script>
 
-		<script>
-			var CLIPBOARD = new CLIPBOARD_CLASS("my_canvas", true);
+    <link rel="stylesheet" type="text/css" href="/css/result-light.css">
 
-			/**
-			 * image pasting into canvas
-			 * 
-			 * @param {string} canvas_id - canvas id
-			 * @param {boolean} autoresize - if canvas will be resized
-			 */
-			function CLIPBOARD_CLASS(canvas_id, autoresize) {
-				var _self = this;
-				var canvas = document.getElementById(canvas_id);
-				var ctx = document.getElementById(canvas_id).getContext("2d");
 
-				//handlers
-				document.addEventListener(
-					'paste', function (e) {
-						console.log(e)
-						_self.paste_auto(e); 
-					}, false
-				);
+  <style type="text/css">
+      
+  </style>
 
-				//on paste
-				this.paste_auto = function (e) {
-					if (e.clipboardData) {
-						var items = e.clipboardData.items;
-						if (!items) return;
-						
-						//access data directly
-						for (var i = 0; i < items.length; i++) {
-							if (items[i].type.indexOf("image") !== -1) {
-								//image
-								var blob = items[i].getAsFile();
-								var URLObj = window.URL || window.webkitURL;
-								var source = URLObj.createObjectURL(blob);
-								this.paste_createImage(source);
-							}
-						}
-						e.preventDefault();
-					}
-				};
-				//draw pasted image to canvas
-				this.paste_createImage = function (source) {
-					var pastedImage = new Image();
-					pastedImage.onload = function () {
-						if(autoresize == true){
-							//resize
-							canvas.width = pastedImage.width;
-							canvas.height = pastedImage.height;
-						}
-						else{
-							//clear canvas
-							ctx.clearRect(0, 0, canvas.width, canvas.height);
-						}
-						ctx.drawImage(pastedImage, 0, 0);
-					};
-					pastedImage.src = source;
-				};
+  <!-- TODO: Missing CoffeeScript 2 -->
+
+  <script type="text/javascript">
+
+
+    window.onload=function(){
+      
+var CLIPBOARD = new CLIPBOARD_CLASS("my_canvas", true);
+
+/**
+ * image pasting into canvas
+ * 
+ * @param {string} canvas_id - canvas id
+ * @param {boolean} autoresize - if canvas will be resized
+ */
+function CLIPBOARD_CLASS(canvas_id, autoresize) {
+	var _self = this;
+	var canvas = document.getElementById(canvas_id);
+	var ctx = document.getElementById(canvas_id).getContext("2d");
+
+	//handlers
+	document.addEventListener('paste', function (e) { _self.paste_auto(e); }, false);
+
+	//on paste
+	this.paste_auto = function (e) {
+		if (e.clipboardData) {
+			var items = e.clipboardData.items;
+			console.log(items)
+			if (!items) return;
+			
+			//access data directly
+			for (var i = 0; i < items.length; i++) {
+				if (items[i].type.indexOf("image") !== -1) {
+					//image
+					var blob = items[i].getAsFile();
+					var URLObj = window.URL || window.webkitURL;
+					var source = URLObj.createObjectURL(blob);
+					this.paste_createImage(source);
+				}
 			}
-		</script>
-	</body>
-</html>
+			e.preventDefault();
+		}
+	};
+	//draw pasted image to canvas
+	this.paste_createImage = function (source) {
+		var pastedImage = new Image();
+		pastedImage.onload = function () {
+			if(autoresize == true){
+				//resize
+				canvas.width = pastedImage.width;
+				canvas.height = pastedImage.height;
+			}
+			else{
+				//clear canvas
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+			}
+			ctx.drawImage(pastedImage, 0, 0);
+		};
+		pastedImage.src = source;
+	};
+}
+
+    }
+
+</script>
+</head>
+<body>
+    1. Copy image data into clipboard or press Print Screen <br>
+2. Press Ctrl+V (page/iframe must be focused):
+<br><br>
+<canvas style="border: 1px solid grey; filter: drop-shadow(rgb(255, 255, 255) 0px 0px 1px) drop-shadow(rgb(255, 255, 255) 0px 0px 1px);" id="my_canvas" width="234" height="144"></canvas>
+
+  
+  <script>
+    // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent){
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: "KJW4E"
+      }], "*")
+    }
+  </script>
 
 
-		
+</body></html>

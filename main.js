@@ -44,7 +44,7 @@ window.oncontextmenu = ()=>false
 
 
 
-/*document.body.addEventListener(
+document.body.addEventListener(
 	"paste",function(event){
 
 		console.log(event.clipboardData.items)
@@ -57,13 +57,7 @@ window.oncontextmenu = ()=>false
 		// 	document.body.appendChild(imgBlock);
 		// }
 	},false
-)*/
-
-const testImg = document.createElement("Canvas")
-testImg.id = "testImg"
-document.body.appendChild(testImg)
-
-const CLIPBOARD = new CLIPBOARD_CLASS("testImg",true)
+)
 
 
 // paste event 得不到資料
