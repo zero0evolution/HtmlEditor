@@ -13,7 +13,7 @@ function dropInFunc(elem){
 	);
 
 	elem.addEventListener(
-		"drop", function(event){
+		"drop", async function(event){
 			event.stopPropagation();event.preventDefault();
 
 			const elem = event.currentTarget;
@@ -21,19 +21,23 @@ function dropInFunc(elem){
 			for (const file of event.dataTransfer.files) {
 				console.log(file)
 
-				if (!file.type.match(/^image/)) {continue;}
-				
-				const imgBlock = createImg(file);
+				let newElem;
+				// console.log(file.type)
+				if (file.type.match(/^image\//i)) {
+					newElem = createImg(file);
+				}
 
-				$(imgBlock).css(
-					{
-						"position":"absolute",
-						"top":String(event.clientY)+"px",
-						"left":String(event.clientX)+"px",
-					}
-				)
+				if(newElem instanceof Element){
+					$(newElem).css(
+						{
+							"position":"absolute",
+							"top":String(event.clientY)+"px",
+							"left":String(event.clientX)+"px",
+						}
+					)
 
-				document.body.appendChild(imgBlock);
+					document.body.appendChild(newElem);
+				}
 			}
 		}, false
 	);

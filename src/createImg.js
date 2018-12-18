@@ -46,7 +46,7 @@ function createImg(imgFile){
 	// close button
 	imgBlock.appendChild(createCloseButton(imgBlock));
 
-	// 
+	// move
 	setElemMoveFunc(imgBlock)
 
 	// 

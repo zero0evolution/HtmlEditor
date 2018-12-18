@@ -4,11 +4,12 @@ $(document.head).append(
 			body{
 				background-color: black;
 				color:white;
-				min-height:100vh;
+				min-height:calc(100vh);
 				margin:0px;
+				// padding-bottom:10px;
 			}
 			div{
-				// display:inline-block;
+
 			}
 		</style>
 	`
@@ -16,41 +17,12 @@ $(document.head).append(
 
 
 
-/*document.body.addEventListener(
-	"mousedown",function(event){
-		// console.log(event.clientX,event.clientY)
-
-		if(event.button === 2){
-
-			//停止原來的功能
-			event.preventDefault();event.stopPropagation();
-
-			// get mouse position
-			const imgDropArea = createImgDropArea()
-
-			$(imgDropArea).css(
-				{
-					"position":"absolute",
-					"left":String(event.clientX)+"px",
-					"top":String(event.clientY)+"px",
-				}
-			)
-
-			document.body.appendChild(imgDropArea)
-		}
-	}
-)*/
-
-
-
-// window.oncontextmenu = ()=>false
-
 // 移入圖片功能
 dropInFunc(document.body)
 
 
 // 貼上圖片功能
-function pasteEvent(event){
+async function pasteEvent(event){
 	const items = event.clipboardData.items
 	const elem = event.currentTarget;
 	// console.log(event.clipboardData.items)
@@ -60,14 +32,36 @@ function pasteEvent(event){
 
 		console.log(item)
 
-		if (item.type.match(/^image/i)){
-			const file = items[i].getAsFile();
+		let newElem;
 
-			const imgBlock = createImg(file);
+		
+		if (item.type.match(/^image\//i)){
 
+			const file = item.getAsFile();
+			newElem = createImg(file);
+		}
+
+		else if (item.type.match(/^text\//i)) {
+			function getStr(item){
+				return(
+					new Promise(
+						function(resolve,reject){
+							item.getAsString(
+								function(string){resolve(string)}
+							)
+						}
+					)
+				)
+			}
+			const string = await getStr(item);
+			// console.log(string);
+			newElem = createText(string);
+		}
+
+		if(newElem instanceof Element){
 			// 移到指定位置
 			if(elem.dataset.hasOwnProperty("mousePosX") && elem.dataset.hasOwnProperty("mousePosY")){
-				$(imgBlock).css(
+				$(newElem).css(
 					{
 						"position":"absolute",
 						"left":elem.dataset.mousePosX+"px",
@@ -76,7 +70,7 @@ function pasteEvent(event){
 				)
 			}
 
-			document.body.appendChild(imgBlock);
+			document.body.appendChild(newElem);
 		}
 	}
 }
@@ -85,24 +79,16 @@ document.body.addEventListener("paste",pasteEvent)
 // window.addEventListener("paste",pasteEvent)
 // document.addEventListener("paste",pasteEvent)
 
-// 記錄滑鼠位置
-document.body.addEventListener(
-	"mousemove",function(event){
-		event.preventDefault();event.stopPropagation();
-		document.body.dataset.mousePosX = String(event.clientX)
-		document.body.dataset.mousePosY = String(event.clientY)
-	}
-)
 
-// 圖片:變更長寬
+
+// resize
 
 // 文字:
-// 移動
 // 字大小
 // 字顏色(預設白色)
 // 字外框顏色 粗細(預設黑 1px)
 // 背景顏色(預設透明)
-// 對齊(預設置中) 
+// 對齊(預設置中)
 
 
 
