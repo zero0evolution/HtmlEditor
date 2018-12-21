@@ -25,7 +25,8 @@ function setElemMoveFunc(elem){
 	// click
 	elem.addEventListener(
 		"mousedown", function(event){
-			event.stopPropagation();event.preventDefault();
+			event.stopPropagation();
+			// event.preventDefault();
 
 			// 確認是滑鼠左鍵
 			const elem = event.currentTarget
@@ -45,7 +46,7 @@ function setElemMoveFunc(elem){
 				document.body.addEventListener("mousemove",moveEvent)
 			}
 			else{deleteAllData(elem)}
-		}, false
+		}
 	);
 
 	/*elem.addEventListener(

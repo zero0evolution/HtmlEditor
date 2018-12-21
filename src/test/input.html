@@ -1,0 +1,171 @@
+<html><head>
+		<meta charset="UTF-8">
+		<title></title>
+
+		<script src="src/jquery-3.3.1.min.js"></script>
+
+		<script src="src/createCloseButton.js"></script>
+		<style>
+			.closeButton{
+				position: absolute;
+				right: 0px;
+				top: 0px;
+				font-size: 28px;
+				line-height: 24px;
+				height:24px;
+				filter: drop-shadow(rgb(0, 0, 0) 0px 0px 1px) drop-shadow(rgb(0, 0, 0) 0px 0px 1px);
+				color: rgb(255, 255, 255);
+				user-select: none;-moz-user-select: none;
+				opacity: 0;
+				color:white;
+				text-shadow: 
+					-2px 0px  black,
+					0px  2px  black,
+					2px  0px  black,
+					0px  -2px black;
+			}
+			.closeButton:hover{
+				opacity: 1;
+			}
+		</style>
+	
+		<!-- <script src='src/createImgDropArea.js'></script> -->
+		<script src="src/createImg.js"></script>
+		<style>
+			.img{
+				width:50vw;height:50vh;
+			}
+			.img:hover{
+				outline:2px solid white;
+			}
+			.img>img{
+				width:auto;height:auto;
+				max-width:100%;max-height:100%;
+			}
+			.img>img:hover{
+				
+			}
+			
+		</style>
+	
+		
+		
+		<script src="src/dropInFunc.js"></script>
+		<script src="src/createText.js"></script>
+		<style>
+			.text{
+				color:white;
+				font-size:28px;
+				text-shadow: 
+					-1px 0px  red,
+					0px  1px  red,
+					1px  0px  red,
+					0px  -1px red;
+				background-color:transparent;
+				text-align:center;
+				display:inline-block;
+				min-height:1em;
+				min-width:1em;
+				line-height:1em;
+				cursor:default !important;
+			}
+			.text:hover{
+				outline:2px solid white;
+			}
+		</style>
+	
+	<style>
+		.setting{
+			color:white;
+			font-size:24px;
+			background-color:black;
+			text-align:left;
+			display:inline-block;
+			border:white 1px solid;
+			position:absolute !important;
+			text-shadow: none;
+			white-space:nowrap;
+		}
+		.setting input{
+			color:white !important;
+			background-color:black !important;
+			font-size:24px !important;
+		}
+	</style>
+
+		
+	
+		<style>
+			body{
+				background-color: black;
+				color:white;
+				min-height:calc(100vh);
+				margin:0px;
+				// padding-bottom:10px;
+			}
+			div{
+
+			}
+		</style>
+	</head>
+	<body align="center" data-mouse-pos-x="659" data-mouse-pos-y="35">
+		<script src="src/setElemMoveFunc.js"></script>
+		<script src="main.js"></script>
+	
+<div>
+    <div id="vtoverlay" class="vtoverlay vthidden w3-animate-right w3-container">
+    <div class="vtmain">
+      <div class="vtcontactus">
+          <a href="https://www.virustotal.com">
+            <img class="vtlogo-small" src="moz-extension://ba874edf-47a5-402e-a748-e6b0654c8b97/icons/vt-32.png" width="20px">
+          </a>
+          <a href="https://www.virustotal.com">
+            VTZilla
+          </a>
+      </div>
+      <div class="vttext" id="statustext">
+        <div class="vtscanstatus" id="vtscanstatus">
+
+        </div>
+        <div class="vtprogress" id="vtprogress">0%</div>
+        <br>
+        <div class="vtscanstatus" id="vtscanlinks">
+
+        </div>
+        <span id="vtclose"><strong>X</strong></span>
+      </div>
+    </div>
+    </div></div><div class="text" style="position: absolute; left: 285px; top: 178px; cursor: auto;">
+			event
+		<div class="closeButton">✖</div><div class="setting" style="position: relative; top: 18px; left: 39px;">
+			<div>
+				大小
+				<input name="fontSize" type="number" max="96" min="8" step="1" value="28">
+				px
+			</div>
+
+			<div>
+				顏色
+				<input name="fontColor" type="text" value="#FFFFFF">
+			</div>
+
+			<div>
+				外框大小
+				<input name="borderSize" type="number" value="2" max="10" min="0" step="1">
+				px
+			</div>
+			<div>
+				外框顏色
+				<input name="borderColor" type="text" value="#FF0000">
+			</div>
+
+			<div>
+				背景顏色
+				<input name="backgroundColor" type="text" value="transparent">
+			</div>
+
+			<div>
+				對齊
+				<input name="textAlign" type="text" value="center">
+			</div>
+		<div class="closeButton">✖</div></div></div></body></html>
