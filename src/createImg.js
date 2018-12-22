@@ -9,8 +9,10 @@ $(document.head).append(
 				outline:2px solid white;
 			}
 			.img>img{
-				width:auto;height:auto;
-				max-width:100%;max-height:100%;
+				width:100%;
+				// height:auto;
+				// max-width:100%;
+				// max-height:100%;
 			}
 			.img>img:hover{
 				
@@ -59,14 +61,29 @@ function createImg(imgFile){
 	// 調整長寬
 	imgElem.addEventListener(
 		"load",function(){
-			$(imgBlock).css(
-				{
-					width:String(imgElem.width)+"px",
-					height:String(imgElem.height)+"px",
-				}
-			)
+			imgResize()
+			imgBlockResize()
 		}
 	)
+	new ResizeSensor(imgBlock, function(){ 
+    imgResize()
+    imgBlockResize()
+	});
+
+	function imgBlockResize(){
+		$(imgBlock).css(
+			{
+				width:(imgElem.width)+"px",
+				height:(imgElem.height)+"px",
+			}
+		)
+	}
+	function imgResize(){
+		imgElem.width = imgBlock.offsetWidth
+		if(imgElem.height>=imgBlock.offsetHeight){
+			delete(imgElem.width)
+		}
+	}
 
 	return(imgBlock)
 }

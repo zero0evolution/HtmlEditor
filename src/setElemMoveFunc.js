@@ -18,32 +18,52 @@ function setElemMoveFunc(elem){
 		delete(elem.dataset.mouseLeftDownFlag)
 		delete(elem.dataset.mousePosX)
 		delete(elem.dataset.mousePosY)
+		delete(elem.dataset.moveFlag)
+		delete(elem.dataset.resizeFlag)
 		elem.style.cursor = "auto"
 		document.body.removeEventListener("mousemove",moveEvent)
+		document.body.removeEventListener("mouseup",mouseUpEvent)
 	}
 
 	// click
 	elem.addEventListener(
 		"mousedown", function(event){
+			const elem = event.currentTarget
+
 			event.stopPropagation();
-			// event.preventDefault();
+			if(elem.classList.contains("img")){
+				event.preventDefault();
+			}
 
 			// 確認是滑鼠左鍵
-			const elem = event.currentTarget
 			if(
 				(!elem.dataset.hasOwnProperty("mouseLeftDownFlag")) && 
 				event.button === 0
 			){
-				//游標顯示為移動狀態
-				elem.style.cursor = "move"
+				
 				//旗標
 				elem.dataset.mouseLeftDownFlag = "1"
-				//紀錄按下的滑鼠 網頁位置
-				
-				elem.dataset.mousePosY = event.clientY-elem.offsetTop
-				elem.dataset.mousePosX = event.clientX-elem.offsetLeft
 				
 				document.body.addEventListener("mousemove",moveEvent)
+
+				document.body.addEventListener("mouseup",mouseUpEvent)
+
+				//紀錄 按下的滑鼠 與 elem 相對位置
+				const relatePosY = event.clientY-elem.offsetTop
+				const relatePosX = event.clientX-elem.offsetLeft
+				elem.dataset.mousePosY = relatePosY
+				elem.dataset.mousePosX = relatePosX
+
+				if(Math.abs(relatePosY-elem.offsetHeight)<=10 && Math.abs(relatePosX-elem.offsetWidth)<=10){
+
+					elem.style.cursor = "nw-resize"
+					elem.dataset.resizeFlag = "1"
+				}
+				else{
+					//游標顯示為移動狀態
+					elem.style.cursor = "move"
+					elem.dataset.moveFlag = "1"
+				}
 			}
 			else{deleteAllData(elem)}
 		}
@@ -56,15 +76,10 @@ function setElemMoveFunc(elem){
 		}
 	)*/
 
-	elem.addEventListener(
-		"mouseup",(event)=>{
-			// 確認是滑鼠左鍵
-			// if(event.button === 0){
-				const elem = event.currentTarget
-				deleteAllData(elem)
-			// }
-		}
-	)
+	function mouseUpEvent(event){
+		// const elem = event.currentTarget
+		deleteAllData(elem)
+	}
 
 	function moveEvent(event){
 		//確認按鍵有按下
@@ -82,17 +97,34 @@ function setElemMoveFunc(elem){
 			// mouse position - element position
 
 			// 
-			elem.style.top = (
-				Number(document.body.dataset.mousePosY)
-				-Number(elem.dataset.mousePosY)
-			)+"px"
-			elem.style.left = (
-				Number(document.body.dataset.mousePosX)
-				-Number(elem.dataset.mousePosX)
-			)+"px"
+			if(elem.dataset.moveFlag){
+				const top = 
+					Number(document.body.dataset.mousePosY)
+					-Number(elem.dataset.mousePosY);
 
-			// elem.dataset.mousePosX = String(event.clientX)
-			// elem.dataset.mousePosY = String(event.clientY)
+				const left = 
+					Number(document.body.dataset.mousePosX)
+					-Number(elem.dataset.mousePosX);
+
+				elem.style.top = top+"px"
+				elem.style.left = left+"px"
+			}
+			else if(elem.dataset.resizeFlag){
+				const height = 
+					Number(document.body.dataset.mousePosY)
+					// -Number(elem.dataset.mousePosY);
+					-elem.offsetTop;
+
+				const width = 
+					Number(document.body.dataset.mousePosX)
+					// -Number(elem.dataset.mousePosX);
+					-elem.offsetLeft;
+
+				if(width>10 && height>10){
+					elem.style.height = height+"px"
+					elem.style.width = width+"px"
+				}
+			}
 		}
 	}
 	

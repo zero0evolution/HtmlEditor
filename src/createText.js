@@ -159,6 +159,10 @@ function createTextSetting(target){
 
 
 	for(const inputElem of settingBlock.querySelectorAll("input,textarea")){
+
+		const elemStyle = getComputedStyle(target)
+		inputElem.value = elemStyle[inputElem.name]
+
 		inputElem.addEventListener(
 			"click",(event)=>{
 				event.stopPropagation();event.preventDefault();
@@ -177,23 +181,26 @@ function createTextSetting(target){
 		)
 
 		if(inputElem.tagName.match(/^textarea$/i)){
+			inputElem.resize()
 			inputElem.addEventListener(
 				"keyup",(event)=>{
-					const textArea = event.currentTarget
-					textArea.style.height = "1px";
-					textArea.style.height = (10+textArea.scrollHeight)+"px";
+					event.currentTarget.resize()
 				}
 			)
 		}
-		const elemStyle = getComputedStyle(target)
-		inputElem.value = elemStyle[inputElem.name]
+		
 	}
-
-	
 
 	settingBlock.appendChild(createCloseButton(settingBlock))
 
 	return(settingBlock)
+}
+
+
+HTMLTextAreaElement.prototype.resize = function(){
+	// console.log(this)
+	this.style.height = "1px";
+	this.style.height = (35+this.scrollHeight)+"px";
 }
 
 function dataTransferItemToStr(file){
